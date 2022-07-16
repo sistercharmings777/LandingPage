@@ -6,7 +6,7 @@ from creativeworld.models import Contact, ContactAdmin, Subscription
 from django.contrib import messages
 from django.core.mail import send_mail
 
-from info import ADMIN_EMAILS
+
 
 
 
@@ -29,13 +29,23 @@ def index(request):
        
         contact = Contact(name=name, email=email, subject=subject, message=message)
         contact.save()
+        
 
         # Contact Admin
         subject = "Enquiry"
         message = f"An enquiry was made from {clientemail}\n\n Visit admin site to see more.\n\n Thank You!."
         from_email = clientemail
-        to_list = [ADMIN_EMAILS]
+        to_list = ["sistercharmings@gmail.com"]
         send_mail(subject, message, from_email, to_list, fail_silently=True)
+
+        # #Contact client
+        # subject = "Received"
+        # message = f"Dear {name}, your enquire was recorded. \n\n Thanks You!!"
+        # from_email = "sistercharmings@gmail.com"
+        # to_list = [clientemail]
+        # send_mail (subject, message, from_email, to_list, fail_silently=True)
+
+
 
 
         
