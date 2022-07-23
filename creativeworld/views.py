@@ -6,8 +6,8 @@ from creativeworld.models import Contact, ContactAdmin, Subscription
 from django.contrib import messages
 from django.core.mail import send_mail
 
-
-
+from dotenv import load_dotenv
+load_dotenv
 
 
 def index(request):
@@ -44,10 +44,6 @@ def index(request):
         # from_email = "sistercharmings@gmail.com"
         # to_list = [clientemail]
         # send_mail (subject, message, from_email, to_list, fail_silently=True)
-
-
-
-
         
     context = {
             'admincontacts': admincontacts
@@ -64,7 +60,7 @@ def subscription(request):
         usermail = Subscription.objects.filter(mail=email)
         if usermail.exists():
             messages.error(request, 'This email has already subcriped')
-            return redirect('success')
+            return redirect('index')
         
         mail = Subscription(mail=email)
         mail.save()
@@ -74,11 +70,11 @@ def subscription(request):
         subject = "Welcome to Creative World"
         message = "Thank you for contacting us"
         from_email = settings.EMAIL_HOST_USER
-        to_list = ["asnteprince777@gmal.com"]
+        to_list = [mail]
         send_mail(subject, message, from_email, to_list, fail_silently=True)
 
     return render(request, 'pages/index.html')
 
 
-def successpage(request):
-    return render('pages/success.html')
+# def successpage(request):
+#     return render('pages/success.html')
